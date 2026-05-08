@@ -1,0 +1,14 @@
+services:
+  pr-autoapprover:
+    build: .
+    image: pr-autoapprover:latest
+
+    container_name: pr-autoapprover
+    restart: unless-stopped
+    user: "1000:1000"
+    working_dir: /app
+    volumes:
+      - ./:/app
+      - ${HOME}/.claude:/home/node/.claude
+    environment:
+      HOME: /home/node

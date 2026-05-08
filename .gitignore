@@ -1,0 +1,8 @@
+node_modules
+.env
+*.log
+state.json
+.idea/
+.vscode/
+.DS_Store
+src/repos.ts

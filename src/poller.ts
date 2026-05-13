@@ -27,6 +27,15 @@ const REPOS = (process.env.GITHUB_REPOS
   .map((r) => r.trim())
   .filter(Boolean);
 
+// If set (comma-separated GitHub usernames), only act on PRs by these authors.
+// Empty/unset = act on every author (current default).
+const ALLOWED_AUTHORS = new Set(
+  (process.env.ALLOWED_AUTHORS || '')
+    .split(',')
+    .map((a) => a.trim())
+    .filter(Boolean),
+);
+
 if (!OWNER || !TOKEN) {
   console.error('GITHUB_OWNER and GITHUB_TOKEN env vars are required.');
   process.exit(1);
@@ -517,6 +526,11 @@ const processPr = async (repo: string, prSummary: PrSummary): Promise<void> => {
   const key = `${OWNER}/${repo}#${prNumber}`;
   if (state[key]?.approvedAt) return;
   if (prSummary.user?.login === viewerLogin) return;
+  if (
+    ALLOWED_AUTHORS.size > 0 &&
+    !ALLOWED_AUTHORS.has(prSummary.user?.login || '')
+  )
+    return;
 
   const reviewState = await getMyReviewState(repo, prNumber);
   if (reviewState === 'APPROVED') {

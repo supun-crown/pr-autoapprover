@@ -131,6 +131,7 @@ The two files you'll actually edit:
 | `GITHUB_OWNER` | (required) | Org or user that owns the repos. |
 | `GITHUB_TOKEN` | (required) | PAT for reading PRs and posting reviews. |
 | `GITHUB_REPOS` | _(uses `repos.ts`)_ | Comma-separated override of the file list. |
+| `ALLOWED_AUTHORS` | _(everyone)_ | Comma-separated GitHub usernames. If set, the bot only acts on PRs by these authors. |
 | `POLL_INTERVAL_MS` | `60000` | How often to scan. 30000 is fine. |
 | `DRY_RUN` | `false` | Don't post anything, just log intent. |
 | `CLAUDE_BIN` | `claude` | Path to the CLI. |
